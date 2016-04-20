@@ -16,12 +16,7 @@ class RegistrationIntentService: IntentService("RegIntentService") {
         var sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         try {
-            // [START register_for_gcm]
-            // Initially this call goes out to the network to retrieve the token, subsequent calls
-            // are local.
-            // R.string.gcm_defaultSenderId (the Sender ID) is typically derived from google-services.json.
-            // See https://developers.google.com/cloud-messaging/android/start for details on this file.
-            // [START get_token]
+
             var instanceID = InstanceID.getInstance(this);
             var token: String = instanceID.getToken(getString(R.string.google_app_id), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
             // [END get_token]

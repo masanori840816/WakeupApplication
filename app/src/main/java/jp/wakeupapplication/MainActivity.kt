@@ -1,14 +1,11 @@
 package jp.wakeupapplication
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.content.SharedPreferences
+import android.content.*
 import android.preference.PreferenceManager
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.widget.ProgressBar
 
@@ -69,31 +66,28 @@ class MainActivity : AppCompatActivity() {
             isReceiverRegistered = true
         }
     }
-
     /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
+     * GooglePlayServices APKが使用可能かをチェック
+     * */
     private fun checkPlayServices(): Boolean {
         val apiAvailability = GoogleApiAvailability.getInstance()
         val resultCode = apiAvailability.isGooglePlayServicesAvailable(this)
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST).show()
+                // ユーザーの操作によってエラーが発生した場合はDialogでエラーコード表示.
+                apiAvailability.getErrorDialog(this, resultCode, 9000).show()
             } else {
-                Log.i(TAG, "This device is not supported.")
-                finish()
+                // その他GooglePlayServices APKが使用不可能ならDialog表示.
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Not Supported")
+                alert.setMessage("This device is not supported.")
+
+                alert.setPositiveButton(getString(android.R.string.ok), null)
+                alert.show()
+
             }
             return false
         }
         return true
     }
-
-    companion object {
-
-        private val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-        private val TAG = "MainActivity"
-    }
-
 }
