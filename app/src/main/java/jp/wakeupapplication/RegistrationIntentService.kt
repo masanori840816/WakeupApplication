@@ -11,7 +11,7 @@ import com.google.android.gms.iid.InstanceID
 /**
  * Created by masanori on 2016/04/16.
  */
-class RegistrationIntentService: IntentService("RegIntentService") {
+class RegistrationIntentService: IntentService("Registration Service") {
     override fun onHandleIntent(intent: Intent){
         var sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 

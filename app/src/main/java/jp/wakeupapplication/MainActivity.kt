@@ -14,7 +14,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 
 class MainActivity : AppCompatActivity() {
 
-    private var mRegistrationBroadcastReceiver: BroadcastReceiver? = null
+    private var registrationBroadcastReceiver: BroadcastReceiver? = null
     //private ProgressBar mRegistrationProgressBar;
     //private TextView mInformationTextView;
     private var isReceiverRegistered: Boolean = false
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
-        mRegistrationBroadcastReceiver = object : BroadcastReceiver() {
+        registrationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 //        mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
                 val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         registerReceiver()
 
         if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
+            // IntentServiceを開始して、Tokenを取得する.
             val intent = Intent(this, RegistrationIntentService::class.java)
             startService(intent)
         }
@@ -54,14 +54,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(registrationBroadcastReceiver)
         isReceiverRegistered = false
         super.onPause()
     }
 
     private fun registerReceiver() {
         if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+            LocalBroadcastManager.getInstance(this).registerReceiver(registrationBroadcastReceiver,
                     IntentFilter("registrationComplete"))
             isReceiverRegistered = true
         }
