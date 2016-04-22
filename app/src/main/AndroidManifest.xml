@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.wakeupapplication">
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission
-        android:name="jp.wakeupapplication.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="jp.wakeupapplication.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -31,7 +27,7 @@
             </intent-filter>
         </receiver>
         <service
-            android:name="jp.wakeupapplication.MyGcmListenerService"
+            android:name="jp.wakeupapplication.MessageListenerService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
