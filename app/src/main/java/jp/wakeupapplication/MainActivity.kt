@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.WindowManager
+import android.widget.CompoundButton
+import android.widget.ToggleButton
 
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -13,6 +16,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var toggleScreenOn = findViewById(R.id.toggle_screenon) as ToggleButton
+        toggleScreenOn.setOnCheckedChangeListener{
+            button:CompoundButton, isChecked: Boolean ->
+                if(isChecked){
+                    // togglebuttonがOnの場合はScreenをOnにし続ける.
+                    window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                }
+                else{
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                }
+        }
 
         if (checkPlayServices()) {
             // IntentServiceを開始して、Tokenを取得する.
