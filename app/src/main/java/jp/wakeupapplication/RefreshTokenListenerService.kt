@@ -10,6 +10,6 @@ class RefreshTokenListenerService : InstanceIDListenerService(){
     // TokenはGCMによって不定期で変更されるため、変更があればTokenを再取得する.
     override fun onTokenRefresh() {
         var intent = Intent(this, RegistrationIntentService::class.java)
-        startService(intent);
+        startService(intent)
     }
 }
